@@ -21,7 +21,7 @@ var WebGLRendererModule = function () {
 
 		renderer.domElement.style.position = 'absolute';
 		renderer.domElement.style.left = '0px';
-                renderer.domElement.style.top = ( ( window.innerHeight - renderer.domElement.height  ) / 2 ) + 'px';
+		renderer.domElement.style.top = ( ( window.innerHeight - renderer.domElement.height  ) / 2 ) + 'px';
 
 	};
 
@@ -45,6 +45,5 @@ var WebGLRendererModule = function () {
 		resize();
 
 	};
-
 
 };
