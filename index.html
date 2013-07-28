@@ -144,6 +144,15 @@
 
 			var animate = function () {
 
+				if ( audio.currentTime === audio.duration ) {
+
+					var info = document.getElementById( 'info' );
+					info.style.display = '';
+
+					return;
+
+				}
+
 				requestAnimationFrame( animate );
 				timeline.update( audio.currentTime );
 
