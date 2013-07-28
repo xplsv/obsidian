@@ -1,0 +1,147 @@
+
+                      ..________
+   ..__        _______\         \ ________             _____..
+-- \    \_____ \       \         \       _\..___ ____ /      / - 
+-- /    /    _/_ \      \         \             \    \      / -- 
+- /____/\    \   \_______\         \__..__\      \____\    / --- 
+         \____\____ \     \         \_  \_________\/______/
+             ..     ..     \_______../               ++ 
+
+
+         ---                                      ---
+                       obsidian by xplsv
+         ---                                      ---
+         ---                                      ---
+
+                        code: mrdoob
+                   direction: trace
+                       music: om unit x lorn
+
+         ---                                      ---
+         ---                                      ---
+                       blah blah blah...
+         ---                                      ---
+         ---                                      ---
+
+         This time I challenged myself to see if I
+         could do a demo with just my ARM Chromebook.
+
+         Not being able to "launch" ChromeOS with the
+         --allow-file-access-from-files flag made
+         things a bit harder. That means that I
+         couldn't use textures or models. Luckily
+         three.js nowadays have a fair amount of
+         primitives to play with.
+
+         It was also a great excuse to improve
+         frame.js, which is a sequencer and editor I 
+         started back in November.
+
+         https://github.com/mrdoob/frame.js
+
+         So, initially I wasn't really planning to
+         do anything for Euskal. But just as I
+         arrived I learnt that Navis was going to
+         release so, even if I only had 2 days until
+         the deadline, I decided to go for it.
+
+         Some months ago I found this great track by
+         Om Unit and Lorn and I kept it on my folder 
+         of potential demo tunes. I decided to use 
+         that one because it was the shortest in the
+         folder, even if I was scared of "wasting"
+         it by doing a crappy demo.
+
+         The process was like with "Or so they
+         say..." once again. I had no idea what the 
+         demo was going to look like. So I started
+         building the first scene aiming to get
+         something that matched the tune's mood.
+         Took a while but in 3 or 4 hours I had the
+         first part - that's 13 seconds done, 227 to
+         go. Then, somehow, I came up with the idea
+         of the always changing sphere that suited
+         this rythmic sound in the tune - probably
+         influenced by the intro of Masaaki Yuasa 's 
+         Kaiba. The tune also felt like something
+         was travelling, so I went with a classic
+         idea of making it travel through a tunnel.
+         The process continued for the whole day
+         until I called it a day. I had 2 minutes
+         filled (until the end of the title) and 2
+         more to fill the next day.
+
+         Initially my plan was to do random scenes
+         and just sync them with the music - like
+         most of demos are. But I seemed unable to 
+         do that, once I finished a scene I could
+         only think on how to follow it. As if I
+         had to tell a story.
+
+         I struggled a bit more the next day with
+         what to do when the spheres collided.
+         Actually, the idea of the colliding spheres 
+         came the second day, so I spent a long while
+         improving what I had and running out of 
+         time for the last 2 minutes. Anyway, again,
+         after I had the collision I guessed the
+         obvious thing would be doing some sort of
+         explosion. But I couldn't stretch that idea
+         for too long. Luckily then the idea for the
+         city (another classic) came up and I
+         wondered if I could stretch that part for a
+         whole minute. Turns out it worked pretty
+         well with the tension that tune has at that
+         point.
+         
+         I did most of the work at the hotel because
+         the party place has become a meme-con and
+         is impossible to do anything. I was 
+         expecting the deadline for demos to be
+         around 5pm on Saturday so I went to finish
+         the demo at the party place. The deadline
+         was at 12pm and they were pretty strict
+         about it and I got disqualified (spain is
+         different).
+
+         I finished in time for the demoshow and I
+         got to enjoy it on the big screen. So did 
+         the 6,000 at the party place (even if they
+         have no idea what this is all about. I also
+         proved myself that I could do a demo with
+         that laptop and I couldn't stop to be
+         amazed how this little device had pretty
+         much the same power the big computer I 
+         used to carry around for parties 10 years
+         ago had.
+
+         Requirements:
+
+            Any browser with WebGL support.
+
+            Also runs on Chrome for Android but
+            it runs at about 2fps on a Galaxy Nexus.
+            I may try to optimise a few things.
+
+         Software used:
+
+             ChromeOS, Text App, frame.js editor
+
+                               - mrdoob & trace.xplsv
+
+         ---                                      ---
+         ---                                      ---
+
+                          More info?
+
+         ---                                      ---
+
+                 mrdoob: http://www.mrdoob.com
+                  trace: http://trace.xplsv.com
+                om unit: http://soundcloud.com/omunit
+                   lorn: http://soundcloud.com/lorn
+
+         ---                                      ---
+         ---                                      ---
+                       xplsv.com 2013
+         ---                                      ---
