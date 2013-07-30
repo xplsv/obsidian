@@ -109,8 +109,8 @@ var Scene6bModule = function () {
 		var t2000 = t * 2000;
 		
 		sphere.position.z = t2000;
-		light.position.z = sphere.position.z;
-		light1.position.z = sphere.position.z - 50;
+		light.position.z = sphere.position.z + 50;
+		light1.position.z = sphere.position.z;
 		
 		var shape = Math.floor( t * 125 ) % sphere.children.length;
 		

@@ -27,8 +27,8 @@ var Scene7Module = function () {
 	
 	// city
 	
-	var plane = new THREE.CubeGeometry( 2, 2, 2 );
-	plane.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 1, 0 ) );
+	var cube = new THREE.CubeGeometry( 2, 2, 2 );
+	cube.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 1, 0 ) );
 	var geometry = new THREE.Geometry() ;
 	var material = new THREE.MeshLambertMaterial( {
 		color: 0x808080,
@@ -37,7 +37,7 @@ var Scene7Module = function () {
 	
 	for ( var i = 0; i < 800; i ++ ) {
 
-		var object = new THREE.Mesh( plane, material );
+		var object = new THREE.Mesh( cube, material );
 		object.position.x = Math.random() * 2000 - 1000;
 		object.position.z = Math.random() * 2000 - 1000;
 		object.scale.x = Math.random() * 20;
@@ -47,20 +47,18 @@ var Scene7Module = function () {
 
 	}
 
-	var tunnel = new THREE.Mesh( geometry, material );
-	scene.add( tunnel );
+	scene.add( new THREE.Mesh( geometry, material ) );
 	
 	var geometry = new THREE.Geometry();
 	var material = new THREE.MeshLambertMaterial( {
 		color: 0x606060,
 		shading: THREE.FlatShading,
-		side: THREE.DoubleSide,
 		wireframe: true
 	} );
 	
 	for ( var i = 0; i < 800; i ++ ) {
 
-		var object = new THREE.Mesh( plane, material );
+		var object = new THREE.Mesh( cube, material );
 		object.position.x = Math.random() * 2000 - 1000;
 		object.position.z = Math.random() * 2000 - 1000;
 		object.scale.x = Math.random() * 20;
@@ -70,28 +68,27 @@ var Scene7Module = function () {
 
 	}
 
-	var tunnel2 = new THREE.Mesh( geometry, material );
-	scene.add( tunnel2 );
+	scene.add( new THREE.Mesh( geometry, material ) );
 	
 	//
 	
 	var group = new THREE.Object3D();
 	scene.add( group );
 	
-	var geometry =  new THREE.TetrahedronGeometry( 12, 0 );
+	var geometry =  new THREE.TetrahedronGeometry( 20, 0 );
 	var material = new THREE.MeshLambertMaterial( {
 		emissive: 0xf00000,
 		shading: THREE.FlatShading
 	} );
 
-	for ( var i = 0; i < 500; i ++ ) {
+	for ( var i = 0; i < 400; i ++ ) {
 
 		var object = new THREE.Mesh( geometry, material );
 		object.position.x = Math.random() - 0.5;
 		object.position.z = Math.random() - 0.5;
 		object.position.normalize();
-		object.position.multiplyScalar( Math.random() * 100 );
-		object.position.y = - Math.random() * 2000 + 2000;
+		object.position.multiplyScalar( Math.random() * 80 );
+		object.position.y = - Math.random() * 2000 + 2050;
 		group.add( object );
 
 	}
@@ -147,8 +144,8 @@ var Scene7Module = function () {
 		sphere.position.y = 1900 - ( t  * 1700 );
 
 		group.position.y = sphere.position.y;
-		group.rotation.y = t * 10;
-		light.position.y = sphere.position.y;		
+		group.rotation.y = t * 15;
+		light.position.y = sphere.position.y;
 		
 		var shape = Math.floor( t * 525 ) % sphere.children.length;
 		
@@ -168,8 +165,8 @@ var Scene7Module = function () {
 		for ( var i = 0, l = group.children.length; i < l; i ++ ) {
 
 			var mesh = group.children[ i ];
-			mesh.rotation.x = i + t * 240;
-			mesh.rotation.z = i + t * 120;
+			mesh.rotation.x = i + t * 60;
+			mesh.rotation.z = i + t * 30;
 			
 		}
 		
