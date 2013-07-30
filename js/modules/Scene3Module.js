@@ -100,7 +100,7 @@ var Scene3Module = function () {
 	  
 		startPosition.fromArray( parameters.startPosition );
 		endPosition.fromArray( parameters.endPosition );
-		deltaPosition.subVectors( endPosition, startPosition );	  
+		deltaPosition.subVectors( endPosition, startPosition );
 	  
 	};
 	
@@ -111,17 +111,17 @@ var Scene3Module = function () {
 		camera.position.copy( deltaPosition );
 		camera.position.multiplyScalar( t );
 		camera.position.add( startPosition );
-		camera.position.x += Math.max( 0, t - 0.495 ) * 500; 
+		camera.position.x += Math.max( 0, t - 0.495 ) * 500;
 		camera.lookAt( scene.position );
 		
-		sphere1.position.z = t * 700 - 700;
+		sphere1.position.z = t * 700 - 710;
 		sphere1.rotation.x = t * 12;
 		sphere1.rotation.z = t * 12;
 
 		light1.position.z = sphere1.position.z + 50;
 		light1b.position.z = sphere1.position.z - 50;
 
-		sphere2.position.z = t * - 700 + 700;
+		sphere2.position.z = t * - 700 + 710;
 		sphere2.rotation.x = - t * 12;
 		sphere2.rotation.z = - t * 12;
 
