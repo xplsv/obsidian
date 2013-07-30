@@ -5,7 +5,6 @@ var TextModule = function () {
 	this.parameters.input = {
 
 		text: "empty",
-		color: 0xffffff,
 		startPosition: [0, 0, 20],
 		endPosition: [0, 0, 40]
 
@@ -18,13 +17,10 @@ var TextModule = function () {
 
 	var scene = new THREE.Scene();
 
-	var geometries = {};
+	var texts = {};
+	var currentText = null;
 
-	var geometry = new THREE.Geometry();
-	var material = new THREE.MeshBasicMaterial( { depthTest: false } );
-
-	var mesh = new THREE.Mesh( geometry, material );
-	scene.add( mesh );
+	var material = new THREE.LineBasicMaterial( { depthTest: false, opacity: 0.9, transparent: true } );
 
 	//
 	
@@ -40,28 +36,52 @@ var TextModule = function () {
 			font: "helvetiker",
 			size: 2
 		} );
+
+		var text = new THREE.Object3D();
+
+		var offset = new THREE.Box3();
+
+		for ( var i = 0; i < shapes.length; i ++ ) {
+
+			var shape = shapes[ i ];
+
+			var geometry = shape.createPointsGeometry();
+			geometry.computeBoundingBox();
+
+			offset.union( geometry.boundingBox );
+
+			var mesh = new THREE.Line( geometry, material );
+			text.add( mesh );
+
+			if ( shape.holes.length > 0 ) {
+
+				for ( var j = 0; j < shape.holes.length; j ++ ) {
+
+					var hole = shape.holes[ j ];
+					shapes.push( hole.toShapes()[ 0 ] );
+
+				}
+
+			}
+
+		}
+
+		text.position.addVectors( offset.min, offset.max ).multiplyScalar( -0.5 );
 		
-		var geometry = new THREE.ShapeGeometry( shapes );
-		THREE.GeometryUtils.center( geometry );
-		
-		geometries[ string ] = geometry;
+		texts[ parameters.text ] = text;
 		
 	}
 		
 	this.start = function ( t, parameters ) {
 	 
-		delete mesh.__webglInit; // TODO: Remove (WebGLRenderer refactoring)
-		mesh.geometry = geometries[ parameters.text ];
-	 
-		if ( parameters.color !== undefined ) {
-		
-			material.color.setHex( parameters.color );
-		
-		} else {
-			
-			material.color.setHex( 0xffffff );
-			
+		if ( currentText !== null ) {
+
+			scene.remove( currentText );
+
 		}
+
+		currentText = texts[ parameters.text ];
+		scene.add( currentText );
 	 
 		startPosition.fromArray( parameters.startPosition );
 		endPosition.fromArray( parameters.endPosition );
