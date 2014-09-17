@@ -139,7 +139,6 @@
 			}
 
 			var audio = document.createElement( 'audio' );
-			audio.src = 'files/obsidian.ogg';
 			audio.controls = true;
 			audio.style.position = 'absolute';
 			audio.style.left = 'calc(50% - 150px)';
@@ -148,9 +147,19 @@
 			audio.style.transition = 'opacity 1s';
 			document.body.appendChild( audio );
 
+			var source = document.createElement( 'source' );
+			source.src = 'files/obsidian.ogg';
+			source.type = 'audio/ogg';
+			audio.appendChild( source );
+
+			var source = document.createElement( 'source' );
+			source.src = 'files/obsidian.mp3';
+			source.type = 'audio/mpeg';
+			audio.appendChild( source );
+
 			var timeoutID;
 
-			document.addEventListener( 'mousemove', function ( event ) {
+			var showControls = function ( event ) {
 
 				audio.style.opacity = 0.5;
 
@@ -166,7 +175,10 @@
 
 				}, 1000 );
 
-			} );
+			};
+
+			document.addEventListener( 'mousemove', showControls );
+			document.addEventListener( 'touchstart', showControls );
 
 			var animate = function () {
 
