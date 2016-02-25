@@ -30,11 +30,10 @@ var Scene3Module = function () {
 
 	var group = new THREE.Object3D();
 	scene.add( group );
-	
-	var geometry =  new THREE.TetrahedronGeometry( 20, 0 );
+
+	var geometry =  new THREE.TetrahedronGeometry( 20, 0 ).toFlatShading();
 	var material = new THREE.MeshLambertMaterial( {
-		color: 0x404040,
-		shading: THREE.FlatShading
+		color: 0x404040
 	} );
 
 	for ( var i = 0; i < 600; i ++ ) {
@@ -48,7 +47,7 @@ var Scene3Module = function () {
 
 	}
 
-	var geometry =  new THREE.TetrahedronGeometry( 20, 1 );
+	var geometry =  new THREE.TetrahedronGeometry( 20, 1 ).toFlatShading();
 
 	for ( var i = 0; i < 600; i ++ ) {
 
@@ -63,47 +62,45 @@ var Scene3Module = function () {
 
 
 	// sphere
-	
+
 	var sphere1 = new THREE.Object3D();
 	scene.add( sphere1 );
 
-	var material = new THREE.MeshLambertMaterial( {
-		shading: THREE.FlatShading
-	} );
-	
-	sphere1.add( new THREE.Mesh( new THREE.SphereGeometry( 20, 2, 2 ), material ) );	
-	sphere1.add( new THREE.Mesh( new THREE.IcosahedronGeometry( 20, 0 ), material ) );
-	sphere1.add( new THREE.Mesh( new THREE.CubeGeometry( 20, 20, 20 ), material ) );
-	sphere1.add( new THREE.Mesh( new THREE.OctahedronGeometry( 20, 0 ), material ) );
-	sphere1.add( new THREE.Mesh( new THREE.IcosahedronGeometry( 20, 1 ), material ) );
-	sphere1.add( new THREE.Mesh( new THREE.TetrahedronGeometry( 20, 0 ), material ) );
-	sphere1.add( new THREE.Mesh( new THREE.TetrahedronGeometry( 20, 1 ), material ) );
+	var material = new THREE.MeshLambertMaterial();
+
+	sphere1.add( new THREE.Mesh( new THREE.SphereGeometry( 20, 2, 2 ).toFlatShading(), material ) );
+	sphere1.add( new THREE.Mesh( new THREE.IcosahedronGeometry( 20, 0 ).toFlatShading(), material ) );
+	sphere1.add( new THREE.Mesh( new THREE.CubeGeometry( 20, 20, 20 ).toFlatShading(), material ) );
+	sphere1.add( new THREE.Mesh( new THREE.OctahedronGeometry( 20, 0 ).toFlatShading(), material ) );
+	sphere1.add( new THREE.Mesh( new THREE.IcosahedronGeometry( 20, 1 ).toFlatShading(), material ) );
+	sphere1.add( new THREE.Mesh( new THREE.TetrahedronGeometry( 20, 0 ).toFlatShading(), material ) );
+	sphere1.add( new THREE.Mesh( new THREE.TetrahedronGeometry( 20, 1 ).toFlatShading(), material ) );
 
 	var sphere2 = new THREE.Object3D();
 	scene.add( sphere2 );
 
-	sphere2.add( new THREE.Mesh( new THREE.IcosahedronGeometry( 20, 0 ), material ) );
-	sphere2.add( new THREE.Mesh( new THREE.CylinderGeometry( 20, 20, 20, 3 ), material ) );
-	sphere2.add( new THREE.Mesh( new THREE.CylinderGeometry( 20, 20, 20, 5 ), material ) );
-	sphere2.add( new THREE.Mesh( new THREE.OctahedronGeometry( 20, 0 ), material ) );
-	sphere2.add( new THREE.Mesh( new THREE.IcosahedronGeometry( 20, 1 ), material ) );
-	sphere2.add( new THREE.Mesh( new THREE.TetrahedronGeometry( 20, 0 ), material ) );
-	sphere2.add( new THREE.Mesh( new THREE.TetrahedronGeometry( 20, 2 ), material ) );
-	
+	sphere2.add( new THREE.Mesh( new THREE.IcosahedronGeometry( 20, 0 ).toFlatShading(), material ) );
+	sphere2.add( new THREE.Mesh( new THREE.CylinderGeometry( 20, 20, 20, 3 ).toFlatShading(), material ) );
+	sphere2.add( new THREE.Mesh( new THREE.CylinderGeometry( 20, 20, 20, 5 ).toFlatShading(), material ) );
+	sphere2.add( new THREE.Mesh( new THREE.OctahedronGeometry( 20, 0 ).toFlatShading(), material ) );
+	sphere2.add( new THREE.Mesh( new THREE.IcosahedronGeometry( 20, 1 ).toFlatShading(), material ) );
+	sphere2.add( new THREE.Mesh( new THREE.TetrahedronGeometry( 20, 0 ).toFlatShading(), material ) );
+	sphere2.add( new THREE.Mesh( new THREE.TetrahedronGeometry( 20, 2 ).toFlatShading(), material ) );
+
 	//
-		
+
 	var startPosition = new THREE.Vector3();
 	var endPosition = new THREE.Vector3();
 	var deltaPosition = new THREE.Vector3();
-	
+
 	this.start = function ( t, parameters ) {
-	  
+
 		startPosition.fromArray( parameters.startPosition );
 		endPosition.fromArray( parameters.endPosition );
 		deltaPosition.subVectors( endPosition, startPosition );
-	  
+
 	};
-	
+
 	var prevShape = 0;
 
 	this.update = function ( t ) {
@@ -113,7 +110,7 @@ var Scene3Module = function () {
 		camera.position.add( startPosition );
 		camera.position.x += Math.max( 0, t - 0.495 ) * 500;
 		camera.lookAt( scene.position );
-		
+
 		sphere1.position.z = t * 700 - 710;
 		sphere1.rotation.x = t * 12;
 		sphere1.rotation.z = t * 12;
@@ -129,11 +126,11 @@ var Scene3Module = function () {
 		light2b.position.z = sphere2.position.z + 50;
 
 		var shape = Math.floor( t * 255 ) % sphere1.children.length;
-		
+
 		if ( shape !== prevShape ) {
-			
+
 			for ( var i = 0, l = sphere1.children.length; i < l; i ++ ) {
-				
+
 				var object = sphere1.children[ i ];
 				object.visible = i === shape;
 
@@ -143,7 +140,7 @@ var Scene3Module = function () {
 			}
 
 			prevShape = shape;
-			
+
 		}
 
 		for ( var i = 0, l = group.children.length; i < l; i ++ ) {
@@ -151,9 +148,9 @@ var Scene3Module = function () {
 			var mesh = group.children[ i ];
 			mesh.rotation.x = i + t * 6;
 			mesh.rotation.y = i + t * 4;
-			
+
 		}
-		
+
 		renderer.render( scene, camera );
 
 	};

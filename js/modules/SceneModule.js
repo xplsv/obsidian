@@ -18,17 +18,15 @@ var SceneModule = function () {
 
 	var light1 = new THREE.PointLight( 0x8844ff, 5, 100 );
 	scene.add( light1 );
-		
+
 	var light2 = new THREE.PointLight( 0xff2288, 5, 100 );
 	scene.add( light2 );
-	
+
 	var group = new THREE.Object3D();
 	scene.add( group );
-	
-	var geometry = new THREE.IcosahedronGeometry( 5, 0 );
-	var material = new THREE.MeshLambertMaterial( {
-		shading: THREE.FlatShading
-	} );
+
+	var geometry = new THREE.IcosahedronGeometry( 5, 0 ).toFlatShading();
+	var material = new THREE.MeshLambertMaterial();
 
 	for ( var i = 0; i < 500; i ++ ) {
 
@@ -41,19 +39,19 @@ var SceneModule = function () {
 		group.add( object );
 
 	}
-	
+
 	//
-		
+
 	var startPosition = new THREE.Vector3();
 	var endPosition = new THREE.Vector3();
 	var deltaPosition = new THREE.Vector3();
-	
+
 	this.start = function ( t, parameters ) {
-	  
+
 		startPosition.fromArray( parameters.startPosition );
 		endPosition.fromArray( parameters.endPosition );
-		deltaPosition.subVectors( endPosition, startPosition );	  
-	  
+		deltaPosition.subVectors( endPosition, startPosition );
+
 	};
 
 	this.update = function ( t ) {
@@ -62,13 +60,13 @@ var SceneModule = function () {
 		camera.position.multiplyScalar( t );
 		camera.position.add( startPosition );
 		camera.lookAt( scene.position );
-		
+
 		light1.position.x = Math.sin( t * 5 ) * 100;
 		light1.position.z = Math.cos( t * 5 ) * 100;
 
 		light2.position.x = Math.sin( t * 5 + 2 ) * 100;
 		light2.position.z = Math.cos( t * 5 + 2 ) * 100;
-		
+
 		for ( var i = 0, l = group.children.length; i < l; i ++ ) {
 
 			var mesh = group.children[ i ];
@@ -76,9 +74,9 @@ var SceneModule = function () {
 			mesh.rotation.x = scale * 2;
 			mesh.rotation.y = scale;
 			mesh.scale.set( scale, scale, scale );
-			
+
 		}
-		
+
 		renderer.render( scene, camera );
 
 	};
