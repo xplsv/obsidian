@@ -10,14 +10,22 @@ var WebGLRendererModule = function () {
 
 	};
 
+	var CARDBOARD = location.search === '?cardboard';
+
 	var width, height;
+	var renderer, effect;
 
 	var resize = function () {
 
-		renderer.setSize(
-			width * ( window.innerWidth / width ),
-			height * ( window.innerWidth / width )
-		);
+		var aspect = window.innerWidth / width;
+
+		if ( CARDBOARD ) {
+
+			effect.setSize( width * aspect, height * aspect );
+
+		}
+
+		renderer.setSize( width * aspect, height * aspect );
 
 		renderer.domElement.style.position = 'absolute';
 		renderer.domElement.style.left = '0px';
@@ -30,13 +38,62 @@ var WebGLRendererModule = function () {
 		width = parameters.width;
 		height = parameters.height;
 
-		renderer = new THREE.WebGLRenderer( { antialias: true, alpha: false } ); // TODO: Remove this nasty global
+		renderer = new THREE.WebGLRenderer( { antialias: true, alpha: false } );
 		renderer.autoClear = false;
+
+		// TODO: Move outside
+
+		renderer.domElement.addEventListener( 'dblclick', function ( event ) {
+
+			var element = document.body;
+
+			if ( element.requestFullscreen ) {
+
+				element.requestFullscreen();
+
+			} else if ( element.msRequestFullscreen ) {
+
+				element.msRequestFullscreen();
+
+			} else if ( element.mozRequestFullScreen ) {
+
+				element.mozRequestFullScreen();
+
+			} else if ( element.webkitRequestFullscreen ) {
+
+				element.webkitRequestFullscreen();
+
+			}
+
+		} );
 
 		if ( parameters.dom !== null ) {
 
 			parameters.dom.appendChild( renderer.domElement );
 			parameters.dom = null; // TODO: Another hack
+
+		}
+
+		// TODO: Remove this nasty global
+
+		if ( CARDBOARD ) {
+
+			effect = new THREE.CardboardEffect( renderer );
+
+			window.renderer = {
+				clear: function () {
+
+					effect.renderOut();
+					effect.clear();
+
+				},
+				render: effect.render,
+				domElement: renderer.domElement
+			};
+
+		} else {
+
+			window.renderer = renderer;
 
 		}
 
