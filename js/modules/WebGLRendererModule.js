@@ -93,10 +93,10 @@ var WebGLRendererModule = function () {
 				},
 				render: function ( scene, camera ) {
 
-					camera2.fov = originalCamera.fov;
-					camera2.aspect = originalCamera.aspect;
-					camera2.near = originalCamera.near;
-					camera2.far = originalCamera.far;
+					camera2.fov = camera.fov;
+					camera2.aspect = camera.aspect;
+					camera2.near = camera.near;
+					camera2.far = camera.far;
 
 					camera.add( camera2 );
 					camera.updateMatrixWorld( true );
