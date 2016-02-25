@@ -38,7 +38,8 @@ var WebGLRendererModule = function () {
 		width = parameters.width;
 		height = parameters.height;
 
-		renderer = new THREE.WebGLRenderer( { antialias: true, alpha: false } );
+		renderer = new THREE.WebGLRenderer( { antialias: !CARDBOARD } );
+		renderer.setPixelRatio( window.devicePixelRatio );
 		renderer.autoClear = false;
 
 		// TODO: Move outside
