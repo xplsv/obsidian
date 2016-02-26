@@ -120,6 +120,7 @@ var WebGLRendererModule = function () {
 
 	};
 
+	/*
 	this.update = function ( t ) {
 
 		if ( CARDBOARD ) {
@@ -129,5 +130,6 @@ var WebGLRendererModule = function () {
 		}
 
 	};
+	*/
 
 };
