@@ -17,15 +17,15 @@ var WebGLRendererModule = function () {
 
 	var resize = function () {
 
-		var aspect = window.innerWidth / width;
+		var scale = window.innerWidth / width;
 
 		if ( CARDBOARD ) {
 
-			effect.setSize( width * aspect, height * aspect );
+			effect.setSize( width * scale, height * scale );
 
 		}
 
-		renderer.setSize( width * aspect, height * aspect );
+		renderer.setSize( width * scale, height * scale );
 
 		renderer.domElement.style.position = 'absolute';
 		renderer.domElement.style.left = '0px';
@@ -94,9 +94,10 @@ var WebGLRendererModule = function () {
 				render: function ( scene, camera ) {
 
 					camera2.fov = camera.fov;
-					camera2.aspect = camera.aspect;
+					camera2.aspect = width / height;
 					camera2.near = camera.near;
 					camera2.far = camera.far;
+					camera2.scale.z = 0.5; // zoom
 
 					camera.add( camera2 );
 					camera.updateMatrixWorld( true );

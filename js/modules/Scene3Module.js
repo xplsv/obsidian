@@ -19,14 +19,8 @@ var Scene3Module = function () {
 	var light1 = new THREE.PointLight( 0xff8844, 5, 300 );
 	scene.add( light1 );
 
-	var light1b = new THREE.PointLight( 0x8844ff, 3, 300 );
-	scene.add( light1b );
-
 	var light2 = new THREE.PointLight( 0x88ff44, 5, 300 );
 	scene.add( light2 );
-
-	var light2b = new THREE.PointLight( 0x8844ff, 3, 300 );
-	scene.add( light2b );
 
 	var group = new THREE.Object3D();
 	scene.add( group );
@@ -116,14 +110,12 @@ var Scene3Module = function () {
 		sphere1.rotation.z = t * 12;
 
 		light1.position.z = sphere1.position.z + 50;
-		light1b.position.z = sphere1.position.z - 50;
 
 		sphere2.position.z = t * - 700 + 710;
 		sphere2.rotation.x = - t * 12;
 		sphere2.rotation.z = - t * 12;
 
 		light2.position.z = sphere2.position.z - 50;
-		light2b.position.z = sphere2.position.z + 50;
 
 		var shape = Math.floor( t * 255 ) % sphere1.children.length;
 
