@@ -13,7 +13,7 @@ var WebGLRendererModule = function () {
 	var CARDBOARD = location.search === '?cardboard';
 
 	var width, height;
-	var renderer, effect, controls, camera2;
+	var renderer, effect;
 
 	var resize = function () {
 
@@ -79,9 +79,6 @@ var WebGLRendererModule = function () {
 
 		if ( CARDBOARD ) {
 
-			camera2 = new THREE.PerspectiveCamera();
-			controls = new THREE.DeviceOrientationControls( camera2 );
-
 			effect = new THREE.CardboardEffect( renderer );
 
 			window.renderer = {
@@ -91,20 +88,7 @@ var WebGLRendererModule = function () {
 					effect.clear();
 
 				},
-				render: function ( scene, camera ) {
-
-					camera2.fov = camera.fov;
-					camera2.aspect = width / height;
-					camera2.near = camera.near;
-					camera2.far = camera.far;
-					camera2.scale.z = 0.5; // zoom
-
-					camera.add( camera2 );
-					camera.updateMatrixWorld( true );
-
-					effect.render( scene, camera2 );
-
-				},
+				render: effect.render,
 				domElement: renderer.domElement
 			};
 
@@ -119,17 +103,5 @@ var WebGLRendererModule = function () {
 		resize();
 
 	};
-
-	/*
-	this.update = function ( t ) {
-
-		if ( CARDBOARD ) {
-
-			controls.update();
-
-		}
-
-	};
-	*/
 
 };
