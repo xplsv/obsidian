@@ -55,7 +55,10 @@
 		<script src="js/Frame.js"></script>
 
 		<script src="js/libs/three.min.js"></script>
-		<script src="js/libs/CardboardEffect.js"></script>
+
+		<script src="js/libs/WebVR.js"></script>
+		<script src="js/libs/ModifiedVREffect.js"></script>
+		<script src="js/libs/VRControls.js"></script>
 
 		<script src="js/modules/WebGLRendererModule.js"></script>
 		<script src="js/modules/ClearModule.js"></script>
@@ -73,6 +76,8 @@
 		<script src="js/modules/TextModule.js"></script>
 
 		<script>
+
+			if ( location.search === '?webvr' ) WEBVR.test();
 
 			THREE.Geometry.prototype.toFlatShading = function () {
 

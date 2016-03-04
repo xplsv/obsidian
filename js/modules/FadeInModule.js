@@ -14,28 +14,29 @@ var FadeInModule = function () {
 
 	this.init = function ( parameters ) {
 
-		camera = new THREE.OrthographicCamera( -1, 1, 1, -1, 0, 1 );
+		camera = new THREE.PerspectiveCamera( 60, 1, 1, 10 );
 
 		material = new THREE.MeshBasicMaterial( {
 			color: parameters.color,
-			// blending: THREE.AdditiveBlending,
+			depthTest: false,
+			side: THREE.BackSide,
 			transparent: true
 		} );
 
 		scene = new THREE.Scene();
 
-		var object = new THREE.Mesh( new THREE.PlaneGeometry( 2, 2 ), material );
+		var object = new THREE.Mesh( new THREE.BoxGeometry( 5, 5, 5 ), material );
 		scene.add( object );
-		
-		opacity = this.parameters.input.opacity
+
+		opacity = this.parameters.input.opacity;
 
 	};
-	
+
 	this.start = function ( t, parameters ) {
-	  
-	  material.color.setHex( parameters.color );
-	  opacity = parameters.opacity;
-		
+
+		material.color.setHex( parameters.color );
+		opacity = parameters.opacity;
+
 	};
 
 	this.update = function ( t ) {

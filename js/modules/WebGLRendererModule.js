@@ -10,20 +10,20 @@ var WebGLRendererModule = function () {
 
 	};
 
-	var CARDBOARD = location.search === '?cardboard';
+	var WEBVR = location.search === '?webvr';
 
 	var width, height;
-	var renderer, effect;
+	var renderer, effect, controls, camera2;
 
 	var resize = function () {
 
-		var scale = window.innerWidth / width;
+		if ( WEBVR ) {
 
-		if ( CARDBOARD ) {
-
-			effect.setSize( width * scale, height * scale );
+			effect.setSize( window.innerWidth, window.innerHeight );
 
 		}
+
+		var scale = window.innerWidth / width;
 
 		renderer.setSize( width * scale, height * scale );
 
@@ -38,35 +38,31 @@ var WebGLRendererModule = function () {
 		width = parameters.width;
 		height = parameters.height;
 
-		renderer = new THREE.WebGLRenderer( { antialias: ! CARDBOARD } );
+		renderer = new THREE.WebGLRenderer( { antialias: true } );
 		renderer.setPixelRatio( window.devicePixelRatio );
 		renderer.autoClear = false;
 
-		// TODO: Move outside
+		var timeoutID;
 
-		renderer.domElement.addEventListener( 'dblclick', function ( event ) {
+		renderer.domElement.addEventListener( 'mousemove', function () {
 
-			var element = document.body;
+			document.body.style.cursor = 'default';
 
-			if ( element.requestFullscreen ) {
+			if ( timeoutID !== undefined ) {
 
-				element.requestFullscreen();
-
-			} else if ( element.msRequestFullscreen ) {
-
-				element.msRequestFullscreen();
-
-			} else if ( element.mozRequestFullScreen ) {
-
-				element.mozRequestFullScreen();
-
-			} else if ( element.webkitRequestFullscreen ) {
-
-				element.webkitRequestFullscreen();
+				clearTimeout( timeoutID );
 
 			}
 
+			timeoutID = setTimeout( function () {
+
+				document.body.style.cursor = 'none';
+
+			}, 1000 );
+
 		} );
+
+		// TODO: Move outside
 
 		if ( parameters.dom !== null ) {
 
@@ -77,22 +73,55 @@ var WebGLRendererModule = function () {
 
 		// TODO: Remove this nasty global
 
-		if ( CARDBOARD ) {
+		if ( WEBVR ) {
 
-			effect = new THREE.CardboardEffect( renderer );
+			camera2 = new THREE.PerspectiveCamera();
+			controls = new THREE.VRControls( camera2 );
+
+			effect = new THREE.VREffect( renderer );
 
 			window.renderer = {
-				clear: function () {
+				clear: function () {},
+				render: function ( scene, camera ) {
 
-					effect.renderOut();
-					effect.clear();
+					camera2.near = camera.near;
+					camera2.far = camera.far;
+					camera2.projectionMatrix = camera.projectionMatrix;
+
+					camera.add( camera2 );
+					camera.updateMatrixWorld( true );
+
+					effect.render( scene, camera2 );
 
 				},
-				render: effect.render,
 				domElement: renderer.domElement
 			};
 
 		} else {
+
+			renderer.domElement.addEventListener( 'dblclick', function ( event ) {
+
+				var element = document.body;
+
+				if ( element.requestFullscreen ) {
+
+					element.requestFullscreen();
+
+				} else if ( element.msRequestFullscreen ) {
+
+					element.msRequestFullscreen();
+
+				} else if ( element.mozRequestFullScreen ) {
+
+					element.mozRequestFullScreen();
+
+				} else if ( element.webkitRequestFullscreen ) {
+
+					element.webkitRequestFullscreen();
+
+				}
+
+			} );
 
 			window.renderer = renderer;
 
@@ -101,6 +130,27 @@ var WebGLRendererModule = function () {
 		window.addEventListener( 'resize', resize );
 
 		resize();
+
+	};
+
+	this.start = function () {
+
+		if ( WEBVR ) {
+
+			controls.resetSensor();
+			effect.requestPresent();
+
+		}
+
+	};
+
+	this.update = function () {
+
+		if ( WEBVR ) {
+
+			controls.update();
+
+		}
 
 	};
 
