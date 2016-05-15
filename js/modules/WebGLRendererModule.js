@@ -10,17 +10,22 @@ var WebGLRendererModule = function () {
 
 	};
 
-	var WEBVR = location.search === '?webvr';
+	var isWebVR = location.search === '?webvr';
 
 	var width, height;
 	var renderer, effect, controls, camera2;
 
 	var resize = function () {
 
-		if ( WEBVR ) {
+		if ( isWebVR ) {
 
 			effect.setSize( window.innerWidth, window.innerHeight );
 
+			if ( WEBVR.isAvailable() === true ) {
+
+				document.body.appendChild( WEBVR.getButton( effect ) );
+
+			}
 		}
 
 		var scale = window.innerWidth / width;
@@ -73,7 +78,7 @@ var WebGLRendererModule = function () {
 
 		// TODO: Remove this nasty global
 
-		if ( WEBVR ) {
+		if ( isWebVR ) {
 
 			camera2 = new THREE.PerspectiveCamera();
 			controls = new THREE.VRControls( camera2 );
@@ -135,10 +140,9 @@ var WebGLRendererModule = function () {
 
 	this.start = function () {
 
-		if ( WEBVR ) {
+		if ( isWebVR ) {
 
-			controls.resetSensor();
-			effect.requestPresent();
+			controls.resetPose();
 
 		}
 
@@ -146,7 +150,7 @@ var WebGLRendererModule = function () {
 
 	this.update = function () {
 
-		if ( WEBVR ) {
+		if ( isWebVR ) {
 
 			controls.update();
 

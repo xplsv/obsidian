@@ -77,7 +77,15 @@
 
 		<script>
 
-			if ( location.search === '?webvr' ) WEBVR.test();
+			if ( location.search === '?webvr' ) {
+
+				if ( WEBVR.isLatestAvailable() === false ) {
+
+					document.body.appendChild( WEBVR.getMessage() );
+
+				}
+
+			}
 
 			THREE.Geometry.prototype.toFlatShading = function () {
 
