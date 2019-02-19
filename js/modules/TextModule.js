@@ -33,7 +33,7 @@ var TextModule = function () {
 		var string = parameters.text;
 
 		var loader = new THREE.FontLoader();
-		loader.load( 'files/fonts/helvetiker_regular.typeface.js', function ( font ) {
+		loader.load( 'files/fonts/helvetiker_regular.typeface.json', function ( font ) {
 
 			var shapes = font.generateShapes( string, 2 );
 
@@ -45,7 +45,7 @@ var TextModule = function () {
 
 				var shape = shapes[ i ];
 
-				var geometry = shape.createPointsGeometry();
+				var geometry = new THREE.Geometry().setFromPoints( shape.getPoints() );
 				geometry.vertices.push( geometry.vertices[ 0 ] );
 				geometry.computeBoundingBox();
 
@@ -54,12 +54,12 @@ var TextModule = function () {
 				var mesh = new THREE.Line( geometry, material );
 				text.add( mesh );
 
-				if ( shape.holes.length > 0 ) {
+				if ( shape.holes && shape.holes.length > 0 ) {
 
 					for ( var j = 0; j < shape.holes.length; j ++ ) {
 
 						var hole = shape.holes[ j ];
-						shapes.push( hole.toShapes()[ 0 ] );
+						shapes.push( hole );
 
 					}
 
