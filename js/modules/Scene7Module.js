@@ -28,7 +28,7 @@ var Scene7Module = function () {
 	// city
 
 	var cube = new THREE.CubeGeometry( 2, 2, 2 );
-	cube.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 1, 0 ) );
+	cube.applyMatrix4( new THREE.Matrix4().makeTranslation( 0, 1, 0 ) );
 	var geometry = new THREE.Geometry() ;
 	var material = new THREE.MeshLambertMaterial( {
 		color: 0x808080

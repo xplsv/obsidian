@@ -112,7 +112,7 @@ THREE.VRControls = function ( object, onError ) {
 					object.updateMatrix();
 
 					standingMatrix.fromArray(vrInput.stageParameters.sittingToStandingTransform);
-					object.applyMatrix( standingMatrix );
+					object.applyMatrix4( standingMatrix );
 
 				} else {
 

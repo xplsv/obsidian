@@ -54,7 +54,7 @@
 	<body>
 		<script src="js/Frame.js"></script>
 
-		<script src="js/libs/three.min.js"></script>
+		<script src="https://unpkg.com/three@0.124.0/build/three.js"></script>
 
 		<script src="js/libs/WebVR.js"></script>
 		<script src="js/libs/ModifiedVREffect.js"></script>
@@ -110,7 +110,7 @@
 
 				}
 
-				geometry.addAttribute( 'position', new THREE.BufferAttribute( positions, 3 ) );
+				geometry.setAttribute( 'position', new THREE.BufferAttribute( positions, 3 ) );
 				geometry.computeVertexNormals();
 
 				return geometry;
