@@ -1,3 +1,42 @@
+import * as THREE from 'three';
+import { FRAME } from 'Frame.js';
+
+function createInstancedMesh(parameters, count = 800, vector3 = new THREE.Vector3()) {
+
+	var dummy = new THREE.Object3D();
+	var datas = [];
+
+	for (var i = 0; i < count; i++) {
+
+		var radius = 50 + (Math.random() * 150);
+
+		dummy.position.x = Math.random() - 0.5;
+		dummy.position.y = Math.random() - 0.5;
+		dummy.position.z = 0;
+		dummy.position.normalize();
+		dummy.position.multiplyScalar(radius);
+		dummy.lookAt(vector3);
+		dummy.position.z = (i * 4) - 500;
+		dummy.scale.x = Math.random() * 10;
+		dummy.scale.y = Math.random() * 10;
+		dummy.scale.z = Math.random() * 20;
+		dummy.updateMatrix();
+		datas.push(dummy.matrix.clone());
+
+	}
+
+	var geometry = new THREE.PlaneGeometry(5, 5);
+	var material = new THREE.MeshLambertMaterial(parameters);
+	var mesh = new THREE.InstancedMesh(geometry, material, datas.length);
+
+	for (let i = 0; i < datas.length; i++) {
+		mesh.setMatrixAt(i, datas[i]);
+	}
+
+	return mesh;
+
+}
+
 var Scene2Module = function () {
 
 	FRAME.Module.call( this );
@@ -30,64 +69,19 @@ var Scene2Module = function () {
 
 	// tunnel
 
-	var plane = new THREE.PlaneGeometry( 5, 5 );
-	var geometry = new THREE.Geometry() ;
-	var material = new THREE.MeshLambertMaterial( {
+	const tunnel1 = createInstancedMesh( {
 		color: 0x606060,
 		side: THREE.DoubleSide
 	} );
 
-	var object = new THREE.Object3D();
-
-	for ( var i = 0; i < 800; i ++ ) {
-
-		var radius = 50 + ( Math.random() * 150 );
-
-		object.position.x = Math.random() - 0.5;
-		object.position.y = Math.random() - 0.5;
-		object.position.z = 0;
-		object.position.normalize();
-		object.position.multiplyScalar( radius );
-		object.lookAt( scene.position );
-		object.position.z = ( i * 4 ) - 500;
-		object.scale.x = Math.random() * 10;
-		object.scale.y = Math.random() * 10;
-		object.scale.z = Math.random() * 20;
-		object.updateMatrix();
-		geometry.merge( plane, object.matrix );
-
-	}
-
-	var tunnel1 = new THREE.Mesh( geometry, material );
 	scene.add( tunnel1 );
 
-	var geometry = new THREE.Geometry();
-	var material = new THREE.MeshLambertMaterial( {
+	const tunnel2 = createInstancedMesh( {
 		color: 0x606060,
 		side: THREE.DoubleSide,
 		wireframe: true
 	} );
 
-	for ( var i = 0; i < 800; i ++ ) {
-
-		var radius = 50 + ( Math.random() * 150 );
-
-		object.position.x = Math.random() - 0.5;
-		object.position.y = Math.random() - 0.5;
-		object.position.z = 0;
-		object.position.normalize();
-		object.position.multiplyScalar( radius );
-		object.lookAt( scene.position );
-		object.position.z = ( i * 4 ) - 500;
-		object.scale.x = Math.random() * 10;
-		object.scale.y = Math.random() * 10;
-		object.scale.z = Math.random() * 20;
-		object.updateMatrix();
-		geometry.merge( plane, object.matrix );
-
-	}
-
-	var tunnel2 = new THREE.Mesh( geometry, material );
 	scene.add( tunnel2 );
 
 
@@ -107,13 +101,13 @@ var Scene2Module = function () {
 
 	var material = new THREE.MeshLambertMaterial();
 
-	sphere.add( new THREE.Mesh( new THREE.SphereGeometry( 20, 2, 2 ).toFlatShading(), material ) );
-	sphere.add( new THREE.Mesh( new THREE.IcosahedronGeometry( 20, 0 ).toFlatShading(), material ) );
-	sphere.add( new THREE.Mesh( new THREE.CubeGeometry( 20, 20, 20 ).toFlatShading(), material ) );
-	sphere.add( new THREE.Mesh( new THREE.OctahedronGeometry( 20, 0 ).toFlatShading(), material ) );
-	sphere.add( new THREE.Mesh( new THREE.IcosahedronGeometry( 20, 1 ).toFlatShading(), material ) );
-	sphere.add( new THREE.Mesh( new THREE.TetrahedronGeometry( 20, 0 ).toFlatShading(), material ) );
-	sphere.add( new THREE.Mesh( new THREE.TetrahedronGeometry( 20, 1 ).toFlatShading(), material ) );
+	sphere.add( new THREE.Mesh( new THREE.SphereGeometry( 20, 2, 2 ), material ) );
+	sphere.add( new THREE.Mesh( new THREE.IcosahedronGeometry( 20, 0 ), material ) );
+	sphere.add( new THREE.Mesh( new THREE.BoxGeometry( 20, 20, 20 ), material ) );
+	sphere.add( new THREE.Mesh( new THREE.OctahedronGeometry( 20, 0 ), material ) );
+	sphere.add( new THREE.Mesh( new THREE.IcosahedronGeometry( 20, 1 ), material ) );
+	sphere.add( new THREE.Mesh( new THREE.TetrahedronGeometry( 20, 0 ), material ) );
+	sphere.add( new THREE.Mesh( new THREE.TetrahedronGeometry( 20, 1 ), material ) );
 
 	//
 
@@ -183,3 +177,5 @@ var Scene2Module = function () {
 	};
 
 };
+
+export { Scene2Module };

@@ -43,6 +43,7 @@
 
 			#info {
 				position: absolute;
+				z-index: 1; /* make button can click */
 				width: 360px;
 				height: 300px;
 				left: calc(50% - 180px);
@@ -52,30 +53,41 @@
 		</style>
 	</head>
 	<body>
-		<script src="js/Frame.js"></script>
+		<!-- Import maps polyfill -->
+		<!-- Remove this when import maps will be widely supported -->
+		<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
 
-		<script src="https://unpkg.com/three@0.124.0/build/three.js"></script>
+		<script type="importmap">
+			{
+				"imports": {
+					"three": "https://unpkg.com/three@0.150.0/build/three.module.js",
+					"three/addons/": "https://unpkg.com/three@0.150.0/examples/jsm/",
+					"libs/": "./js/libs/",
+					"modules/": "./js/modules/",
+					"Frame.js": "./js/Frame.js"
+				}
+			}
+		</script>
 
-		<script src="js/libs/WebVR.js"></script>
-		<script src="js/libs/ModifiedVREffect.js"></script>
-		<script src="js/libs/VRControls.js"></script>
-
-		<script src="js/modules/WebGLRendererModule.js"></script>
-		<script src="js/modules/ClearModule.js"></script>
-		<script src="js/modules/FadeInModule.js"></script>
-
-		<script src="js/modules/SceneModule.js"></script>
-		<script src="js/modules/Scene2Module.js"></script>
-		<script src="js/modules/Scene2bModule.js"></script>
-		<script src="js/modules/Scene3Module.js"></script>
-		<script src="js/modules/Scene4Module.js"></script>
-		<script src="js/modules/Scene5Module.js"></script>
-		<script src="js/modules/Scene6Module.js"></script>
-		<script src="js/modules/Scene6bModule.js"></script>
-		<script src="js/modules/Scene7Module.js"></script>
-		<script src="js/modules/TextModule.js"></script>
-
-		<script>
+		<script type="module">
+			import * as THREE from 'three';
+			import { FRAME } from "Frame.js";
+			import { WEBVR } from "libs/WebVR.js";
+			import { VREffect } from "libs/ModifiedVREffect.js";
+			import { VRControls } from "libs/VRControls.js";
+			import { WebGLRendererModule } from "modules/WebGLRendererModule.js";
+			import { ClearModule } from "modules/ClearModule.js";
+			import { FadeInModule } from "modules/FadeInModule.js";
+			import { SceneModule } from "modules/SceneModule.js";
+			import { Scene2Module } from "modules/Scene2Module.js";
+			import { Scene2bModule } from "modules/Scene2bModule.js";
+			import { Scene3Module } from "modules/Scene3Module.js";
+			import { Scene4Module } from "modules/Scene4Module.js";
+			import { Scene5Module } from "modules/Scene5Module.js";
+			import { Scene6Module } from "modules/Scene6Module.js";
+			import { Scene6bModule } from "modules/Scene6bModule.js";
+			import { Scene7Module } from "modules/Scene7Module.js";
+			import { TextModule } from "modules/TextModule.js";
 
 			if ( location.search === '?webvr' ) {
 
@@ -87,53 +99,35 @@
 
 			}
 
-			THREE.Geometry.prototype.toFlatShading = function () {
-
-				var geometry = new THREE.BufferGeometry();
-
-				var positions = new Float32Array( this.faces.length * 3 * 3 );
-
-				var k = 0, map = [ 'a', 'b', 'c' ];
-
-				for ( var i = 0; i < this.faces.length; i ++ ) {
-
-					var face = this.faces[ i ];
-
-					for ( var j = 0; j < 3; j ++ ) {
-
-						var vertex = this.vertices[ face[ map[ j ] ] ];
-						vertex.toArray( positions, k );
-
-						k += 3;
-
-					}
-
-				}
-
-				geometry.setAttribute( 'position', new THREE.BufferAttribute( positions, 3 ) );
-				geometry.computeVertexNormals();
-
-				return geometry;
-
-			};
-
-			//
+			window.WebGLRendererModule = WebGLRendererModule;
+			window.ClearModule = ClearModule;
+			window.FadeInModule = FadeInModule;
+			window.SceneModule = SceneModule;
+			window.Scene2Module = Scene2Module;
+			window.Scene2bModule = Scene2bModule;
+			window.Scene3Module = Scene3Module;
+			window.Scene4Module = Scene4Module;
+			window.Scene5Module = Scene5Module;
+			window.Scene6Module = Scene6Module;
+			window.Scene6bModule = Scene6bModule;
+			window.Scene7Module = Scene7Module;
+			window.TextModule = TextModule;
 
 			var json = {"metadata":{"version":1},"timeline":[[0,0,247.09375,"WebGLRendererModule",{"width":1280,"height":720,"dom":null}],[4,0,4.3125,"FadeInModule",{"color":12312063,"opacity":0.9}],[2,0,14.052395209580844,"SceneModule",{"startPosition":[100,100,100],"endPosition":[-100,100,100]}],[1,0,247.0625,"ClearModule",{}],[3,4.3125,3.949479594939186,"TextModule",{"text":"xplsv","startPosition":[0,0,18],"endPosition":[0,0,15]}],[3,10.304385479837494,3.7523245278354027,"TextModule",{"text":"presents","startPosition":[0,0,18],"endPosition":[0,0,15]}],[4,13.10237494155758,0.10686839210705572,"FadeInModule",{"color":12312063,"opacity":0.75}],[4,13.222523546148029,0.09801491711812256,"FadeInModule",{"color":12312063,"opacity":0.75}],[4,13.33381867574956,0.12014860459045545,"FadeInModule",{"color":12312063,"opacity":0.75}],[4,13.524806843061466,0.12014860459045545,"FadeInModule",{"color":12312063,"opacity":0.75}],[4,13.647662866830075,0.12014860459045545,"FadeInModule",{"color":12312063,"opacity":0.75}],[4,13.820206681001373,0.12014860459045545,"FadeInModule",{"color":12312063,"opacity":0.75}],[4,13.93287025565171,0.12014860459045545,"FadeInModule",{"color":12312063,"opacity":0.75}],[2,14.052395209580844,13.989895209580844,"Scene2Module",{"startPosition":[-20,-20,30],"endPosition":[0,0,2030],"startPositionTarget":[-50,0,0],"endPositionTarget":[25,0,2000]}],[2,28.042290419161688,13.802395209580844,"Scene2bModule",{"startPosition":[400,0,-100],"endPosition":[50,0,2100],"startPositionTarget":[0,0,0],"endPositionTarget":[0,0,2000]}],[2,41.84468562874253,13.802395209580844,"Scene2Module",{"startPosition":[50,-50,300],"endPosition":[-50,-25,1700],"startPositionTarget":[0,0,-50],"endPositionTarget":[0,0,2050]}],[2,55.647080838323376,13.802395209580844,"Scene2bModule",{"startPosition":[50,0,100],"endPosition":[150,0,2100],"startPositionTarget":[0,0,-50],"endPositionTarget":[0,0,2050]}],[2,69.44947604790423,14.043549989267179,"Scene2Module",{"startPosition":[-100,-100,1100],"endPosition":[-50,0,2100],"startPositionTarget":[0,0,500],"endPositionTarget":[0,0,2000]}],[4,82.27357633279475,1.220062600969306,"FadeInModule",{"color":12312063,"opacity":0.9}],[2,83.49302603717142,27.964287014958565,"Scene3Module",{"startPosition":[-600,0,0],"endPosition":[-600,0,0]}],[3,83.4942100076729,3.50356830892993,"TextModule",{"text":"coding / mr.doob x three.js","startPosition":[0,0,40],"endPosition":[0,0,35]}],[3,87.04752956038395,3.3543145775866465,"TextModule",{"text":"direction / trace","startPosition":[0,0,40],"endPosition":[0,0,35]}],[3,90.45159538175169,3.4289414432582883,"TextModule",{"text":"music / om unit x lorn","startPosition":[0,0,40],"endPosition":[0,0,35]}],[3,93.93028806879107,3.478692687039383,"TextModule",{"text":"for euskal 2013","startPosition":[0,0,40],"endPosition":[0,0,35]}],[3,97.40898075583046,14.044730422888431,"TextModule",{"text":"OBSIDIAN","startPosition":[0,0,20],"endPosition":[0,0,7]}],[2,111.45731305212999,13.870537014958565,"Scene4Module",{"startPosition":[0,0,200],"endPosition":[0,0,700]}],[2,125.32785006708855,13.870537014958565,"Scene4Module",{"startPosition":[0,50,50],"endPosition":[300,-100,600]}],[2,139.1983870820471,13.870537014958565,"Scene5Module",{"startPosition":[50,-500,500],"endPosition":[0,50,1500]}],[2,153.06892409700566,13.870537014958565,"Scene6bModule",{"startPosition":[700,30,-500],"endPosition":[200,-100,1800]}],[2,166.93946111196422,13.870537014958565,"Scene6Module",{"startPosition":[100,0,300],"endPosition":[-1000,0,2200]}],[2,180.81446111196422,55.745537014958565,"Scene7Module",{"startPosition":[0,0,50],"endPosition":[0,50,2000],"startPositionTarget":[0,0,0],"endPositionTarget":[0,500,0]}]],"curves":[]};
 
-			var timeline = new FRAME.Timeline();
+			const timeline = new FRAME.Timeline();
 
-			var modules = {};
+			const modules = {};
 
-			for ( var i = 0, l = json.timeline.length; i < l; i ++ ) {
+			for ( let i = 0, l = json.timeline.length; i < l; i ++ ) {
 
-				var data = json.timeline[ i ];
+				const data = json.timeline[ i ];
 
-				var layer = data[ 0 ];
-				var start = data[ 1 ];
-				var duration = data[ 2 ];
-				var moduleName = data[ 3 ];
-				var parameters = data[ 4 ];
+				const layer = data[ 0 ];
+				const start = data[ 1 ];
+				const duration = data[ 2 ];
+				const moduleName = data[ 3 ];
+				const parameters = data[ 4 ];
 
 				if ( window[ moduleName ] === undefined ) {
 
@@ -142,7 +136,7 @@
 
 				}
 
-				var module;
+				let module;
 
 				if ( modules[ moduleName ] === undefined ) {
 
@@ -157,7 +151,7 @@
 
 				}
 
-				for ( var key in parameters ) {
+				for ( const key in parameters ) {
 
 					if ( module.parameters.input[ key ] === undefined ) {
 
@@ -175,13 +169,13 @@
 
 				}
 
-				var element = new FRAME.TimelineElement( moduleName, layer, start, duration, module, parameters );
+				const element = new FRAME.TimelineElement( moduleName, layer, start, duration, module, parameters );
 
 				timeline.add( element );
 
 			}
 
-			var audio = document.createElement( 'audio' );
+			const audio = document.createElement( 'audio' );
 			audio.controls = true;
 			audio.style.position = 'absolute';
 			audio.style.left = 'calc(50% - 150px)';
@@ -190,19 +184,19 @@
 			audio.style.transition = 'opacity 1s';
 			document.body.appendChild( audio );
 
-			var source = document.createElement( 'source' );
-			source.src = 'files/obsidian.ogg';
-			source.type = 'audio/ogg';
-			audio.appendChild( source );
+			const ogg = document.createElement( 'source' );
+			ogg.src = 'files/obsidian.ogg';
+			ogg.type = 'audio/ogg';
+			audio.appendChild( ogg );
 
-			var source = document.createElement( 'source' );
-			source.src = 'files/obsidian.mp3';
-			source.type = 'audio/mpeg';
-			audio.appendChild( source );
+			const mp3 = document.createElement( 'source' );
+			mp3.src = 'files/obsidian.mp3';
+			mp3.type = 'audio/mpeg';
+			audio.appendChild( mp3 );
 
-			var timeoutID;
+			let timeoutID;
 
-			var showControls = function ( event ) {
+			function showControls( event ) {
 
 				audio.style.opacity = 0.5;
 
@@ -223,13 +217,13 @@
 			document.addEventListener( 'mousemove', showControls );
 			document.addEventListener( 'touchstart', showControls );
 
-			var animate = function () {
+			function animate() {
 
 				if ( audio.duration > 0 && audio.currentTime === audio.duration ) {
 
 					audio.style.display = 'none';
 
-					var info = document.getElementById( 'info' );
+					const info = document.getElementById( 'info' );
 					info.style.display = '';
 
 					return;
@@ -241,17 +235,19 @@
 
 			};
 
-			var start = function () {
+			function start() {
 
 				audio.style.display = '';
 
-				var info = document.getElementById( 'info' );
+				const info = document.getElementById( 'info' );
 				info.style.display = 'none';
 
 				audio.play();
 				animate();
 
 			};
+
+			window.start = start;
 
 		</script>
 		<div id="info">

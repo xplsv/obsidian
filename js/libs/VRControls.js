@@ -1,9 +1,11 @@
+import * as THREE from 'three';
+
 /**
  * @author dmarcos / https://github.com/dmarcos
  * @author mrdoob / http://mrdoob.com
  */
 
-THREE.VRControls = function ( object, onError ) {
+var VRControls = function ( object, onError ) {
 
 	var scope = this;
 
@@ -173,3 +175,5 @@ THREE.VRControls = function ( object, onError ) {
 	};
 
 };
+
+export { VRControls };

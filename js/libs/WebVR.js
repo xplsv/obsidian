@@ -95,3 +95,5 @@ var WEBVR = {
 	}
 
 };
+
+export { WEBVR };

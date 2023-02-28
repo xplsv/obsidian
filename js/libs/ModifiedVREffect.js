@@ -1,3 +1,5 @@
+import * as THREE from 'three';
+
 /**
  * @author dmarcos / https://github.com/dmarcos
  * @author mrdoob / http://mrdoob.com
@@ -9,7 +11,7 @@
  *
  */
 
-THREE.VREffect = function ( renderer, onError ) {
+function VREffect( renderer, onError ) {
 
 	var vrHMD;
 	var isDeprecatedAPI = false;
@@ -409,3 +411,5 @@ THREE.VREffect = function ( renderer, onError ) {
 	}
 
 };
+
+export { VREffect };

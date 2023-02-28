@@ -1,3 +1,6 @@
+import * as THREE from "three";
+import { FRAME } from 'Frame.js';
+
 var Scene3Module = function () {
 
 	FRAME.Module.call( this );
@@ -25,7 +28,7 @@ var Scene3Module = function () {
 	var group = new THREE.Object3D();
 	scene.add( group );
 
-	var geometry =  new THREE.TetrahedronGeometry( 20, 0 ).toFlatShading();
+	var geometry =  new THREE.TetrahedronGeometry( 20, 0 );
 	var material = new THREE.MeshLambertMaterial( {
 		color: 0x404040
 	} );
@@ -41,7 +44,7 @@ var Scene3Module = function () {
 
 	}
 
-	var geometry =  new THREE.TetrahedronGeometry( 20, 1 ).toFlatShading();
+	var geometry =  new THREE.TetrahedronGeometry( 20, 1 );
 
 	for ( var i = 0; i < 600; i ++ ) {
 
@@ -62,24 +65,24 @@ var Scene3Module = function () {
 
 	var material = new THREE.MeshLambertMaterial();
 
-	sphere1.add( new THREE.Mesh( new THREE.SphereGeometry( 20, 2, 2 ).toFlatShading(), material ) );
-	sphere1.add( new THREE.Mesh( new THREE.IcosahedronGeometry( 20, 0 ).toFlatShading(), material ) );
-	sphere1.add( new THREE.Mesh( new THREE.CubeGeometry( 20, 20, 20 ).toFlatShading(), material ) );
-	sphere1.add( new THREE.Mesh( new THREE.OctahedronGeometry( 20, 0 ).toFlatShading(), material ) );
-	sphere1.add( new THREE.Mesh( new THREE.IcosahedronGeometry( 20, 1 ).toFlatShading(), material ) );
-	sphere1.add( new THREE.Mesh( new THREE.TetrahedronGeometry( 20, 0 ).toFlatShading(), material ) );
-	sphere1.add( new THREE.Mesh( new THREE.TetrahedronGeometry( 20, 1 ).toFlatShading(), material ) );
+	sphere1.add( new THREE.Mesh( new THREE.SphereGeometry( 20, 2, 2 ), material ) );
+	sphere1.add( new THREE.Mesh( new THREE.IcosahedronGeometry( 20, 0 ), material ) );
+	sphere1.add( new THREE.Mesh( new THREE.BoxGeometry( 20, 20, 20 ), material ) );
+	sphere1.add( new THREE.Mesh( new THREE.OctahedronGeometry( 20, 0 ), material ) );
+	sphere1.add( new THREE.Mesh( new THREE.IcosahedronGeometry( 20, 1 ), material ) );
+	sphere1.add( new THREE.Mesh( new THREE.TetrahedronGeometry( 20, 0 ), material ) );
+	sphere1.add( new THREE.Mesh( new THREE.TetrahedronGeometry( 20, 1 ), material ) );
 
 	var sphere2 = new THREE.Object3D();
 	scene.add( sphere2 );
 
-	sphere2.add( new THREE.Mesh( new THREE.IcosahedronGeometry( 20, 0 ).toFlatShading(), material ) );
-	sphere2.add( new THREE.Mesh( new THREE.CylinderGeometry( 20, 20, 20, 3 ).toFlatShading(), material ) );
-	sphere2.add( new THREE.Mesh( new THREE.CylinderGeometry( 20, 20, 20, 5 ).toFlatShading(), material ) );
-	sphere2.add( new THREE.Mesh( new THREE.OctahedronGeometry( 20, 0 ).toFlatShading(), material ) );
-	sphere2.add( new THREE.Mesh( new THREE.IcosahedronGeometry( 20, 1 ).toFlatShading(), material ) );
-	sphere2.add( new THREE.Mesh( new THREE.TetrahedronGeometry( 20, 0 ).toFlatShading(), material ) );
-	sphere2.add( new THREE.Mesh( new THREE.TetrahedronGeometry( 20, 2 ).toFlatShading(), material ) );
+	sphere2.add( new THREE.Mesh( new THREE.IcosahedronGeometry( 20, 0 ), material ) );
+	sphere2.add( new THREE.Mesh( new THREE.CylinderGeometry( 20, 20, 20, 3 ), material ) );
+	sphere2.add( new THREE.Mesh( new THREE.CylinderGeometry( 20, 20, 20, 5 ), material ) );
+	sphere2.add( new THREE.Mesh( new THREE.OctahedronGeometry( 20, 0 ), material ) );
+	sphere2.add( new THREE.Mesh( new THREE.IcosahedronGeometry( 20, 1 ), material ) );
+	sphere2.add( new THREE.Mesh( new THREE.TetrahedronGeometry( 20, 0 ), material ) );
+	sphere2.add( new THREE.Mesh( new THREE.TetrahedronGeometry( 20, 2 ), material ) );
 
 	//
 
@@ -148,3 +151,5 @@ var Scene3Module = function () {
 	};
 
 };
+
+export { Scene3Module };

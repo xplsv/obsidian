@@ -51,7 +51,7 @@ var FRAME = ( function () {
 					}
 
 				},
-				
+
 				elements: elements,
 
 				update: function ( time ) {
@@ -132,9 +132,9 @@ var FRAME = ( function () {
 		},
 
 		TimelineElement: function () {
-			
+
 			var id = 0;
-			
+
 			return function ( name, layer, start, duration, module, parameters ) {
 
 				this.id = id ++;
@@ -144,7 +144,7 @@ var FRAME = ( function () {
 				this.duration = duration;
 				this.module = module;
 				this.parameters = parameters;
-				
+
 			};
 
 		}()
@@ -152,3 +152,5 @@ var FRAME = ( function () {
 	}
 
 } )();
+
+export { FRAME };

@@ -1,3 +1,6 @@
+import * as THREE from "three";
+import { FRAME } from "Frame.js";
+
 var FadeInModule = function () {
 
 	FRAME.Module.call( this );
@@ -47,3 +50,5 @@ var FadeInModule = function () {
 	};
 
 };
+
+export { FadeInModule };

@@ -1,3 +1,36 @@
+import * as THREE from 'three';
+import { FRAME } from 'Frame.js';
+
+function createInstancedMesh(parameters, count = 800) {
+
+	var dummy = new THREE.Object3D();
+	var datas = [];
+
+	for (var i = 0; i < count; i++) {
+
+		dummy.position.x = Math.random() * 2000 - 1000;
+		dummy.position.z = Math.random() * 2000 - 1000;
+		dummy.scale.x = Math.random() * 20;
+		dummy.scale.y = Math.random() * Math.random() * 100;
+		dummy.scale.z = Math.random() * 20;
+		dummy.updateMatrix();
+		datas.push(dummy.matrix.clone());
+
+	}
+
+	var geometry = new THREE.BoxGeometry( 2, 2, 2 );
+	geometry.applyMatrix4( new THREE.Matrix4().makeTranslation( 0, 1, 0 ) );
+	var material = new THREE.MeshLambertMaterial(parameters);
+	var mesh = new THREE.InstancedMesh(geometry, material, datas.length);
+
+	for (let i = 0; i < datas.length; i++) {
+		mesh.setMatrixAt(i, datas[i]);
+	}
+
+	return mesh;
+
+}
+
 var Scene7Module = function () {
 
 	FRAME.Module.call( this );
@@ -27,55 +60,15 @@ var Scene7Module = function () {
 
 	// city
 
-	var cube = new THREE.CubeGeometry( 2, 2, 2 );
-	cube.applyMatrix4( new THREE.Matrix4().makeTranslation( 0, 1, 0 ) );
-	var geometry = new THREE.Geometry() ;
-	var material = new THREE.MeshLambertMaterial( {
-		color: 0x808080
-	} );
-
-	var object = new THREE.Object3D();
-
-	for ( var i = 0; i < 800; i ++ ) {
-
-		object.position.x = Math.random() * 2000 - 1000;
-		object.position.z = Math.random() * 2000 - 1000;
-		object.scale.x = Math.random() * 20;
-		object.scale.y = Math.random() * Math.random() * 100;
-		object.scale.z = Math.random() * 20;
-		object.updateMatrix();
-		geometry.merge( cube, object.matrix );
-
-	}
-
-	scene.add( new THREE.Mesh( geometry, material ) );
-
-	var geometry = new THREE.Geometry();
-	var material = new THREE.MeshPhongMaterial( {
-		color: 0x606060,
-		wireframe: true
-	} );
-
-	for ( var i = 0; i < 800; i ++ ) {
-
-		object.position.x = Math.random() * 2000 - 1000;
-		object.position.z = Math.random() * 2000 - 1000;
-		object.scale.x = Math.random() * 20;
-		object.scale.y = Math.random() * Math.random() * 100;
-		object.scale.z = Math.random() * 20;
-		object.updateMatrix();
-		geometry.merge( cube, object.matrix );
-
-	}
-
-	scene.add( new THREE.Mesh( geometry, material ) );
+	scene.add( createInstancedMesh( { color: 0x808080 } ) )
+	scene.add( createInstancedMesh( { color: 0x606060, wireframe: true} ) )
 
 	//
 
 	var group = new THREE.Object3D();
 	scene.add( group );
 
-	var geometry =  new THREE.TetrahedronGeometry( 20, 0 ).toFlatShading();
+	var geometry =  new THREE.TetrahedronGeometry( 20, 0 );
 	var material = new THREE.MeshPhongMaterial( {
 		emissive: 0xf00000
 	} );
@@ -96,13 +89,13 @@ var Scene7Module = function () {
 	sphere.scale.multiplyScalar( 5 );
 	scene.add( sphere );
 
-	sphere.add( new THREE.Mesh( new THREE.SphereGeometry( 20, 2, 2 ).toFlatShading(), material ) );
-	sphere.add( new THREE.Mesh( new THREE.IcosahedronGeometry( 20, 0 ).toFlatShading(), material ) );
-	sphere.add( new THREE.Mesh( new THREE.CubeGeometry( 20, 20, 20 ).toFlatShading(), material ) );
-	sphere.add( new THREE.Mesh( new THREE.OctahedronGeometry( 20, 0 ).toFlatShading(), material ) );
-	sphere.add( new THREE.Mesh( new THREE.IcosahedronGeometry( 20, 1 ).toFlatShading(), material ) );
-	sphere.add( new THREE.Mesh( new THREE.TetrahedronGeometry( 20, 0 ).toFlatShading(), material ) );
-	sphere.add( new THREE.Mesh( new THREE.TetrahedronGeometry( 20, 1 ).toFlatShading(), material ) );
+	sphere.add( new THREE.Mesh( new THREE.SphereGeometry( 20, 2, 2 ), material ) );
+	sphere.add( new THREE.Mesh( new THREE.IcosahedronGeometry( 20, 0 ), material ) );
+	sphere.add( new THREE.Mesh( new THREE.BoxGeometry( 20, 20, 20 ), material ) );
+	sphere.add( new THREE.Mesh( new THREE.OctahedronGeometry( 20, 0 ), material ) );
+	sphere.add( new THREE.Mesh( new THREE.IcosahedronGeometry( 20, 1 ), material ) );
+	sphere.add( new THREE.Mesh( new THREE.TetrahedronGeometry( 20, 0 ), material ) );
+	sphere.add( new THREE.Mesh( new THREE.TetrahedronGeometry( 20, 1 ), material ) );
 
 	//
 
@@ -174,3 +167,5 @@ var Scene7Module = function () {
 	};
 
 };
+
+export { Scene7Module };

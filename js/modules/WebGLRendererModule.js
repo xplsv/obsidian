@@ -1,3 +1,9 @@
+import * as THREE from "three";
+import { VRControls } from "libs/VRControls.js";
+import { VREffect } from "libs/ModifiedVREffect.js";
+
+import { FRAME } from "Frame.js";
+
 var WebGLRendererModule = function () {
 
 	FRAME.Module.call( this );
@@ -81,9 +87,9 @@ var WebGLRendererModule = function () {
 		if ( isWebVR ) {
 
 			camera2 = new THREE.PerspectiveCamera();
-			controls = new THREE.VRControls( camera2 );
+			controls = new VRControls( camera2 );
 
-			effect = new THREE.VREffect( renderer );
+			effect = new VREffect( renderer );
 
 			window.renderer = {
 				clear: function () {},
@@ -159,3 +165,5 @@ var WebGLRendererModule = function () {
 	};
 
 };
+
+export { WebGLRendererModule };

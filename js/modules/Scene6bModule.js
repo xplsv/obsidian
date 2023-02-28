@@ -1,3 +1,6 @@
+import * as THREE from "three";
+import { FRAME } from 'Frame.js';
+
 var Scene6bModule = function () {
 
 	FRAME.Module.call( this );
@@ -30,7 +33,7 @@ var Scene6bModule = function () {
 	var group = new THREE.Object3D();
 	scene.add( group );
 
-	var geometry =  new THREE.TetrahedronGeometry( 20, 0 ).toFlatShading();
+	var geometry =  new THREE.TetrahedronGeometry( 20, 0 );
 	var material = new THREE.MeshLambertMaterial( {
 		emissive: 0xf00000
 	} );
@@ -53,20 +56,20 @@ var Scene6bModule = function () {
 	sphere.scale.multiplyScalar( 3 );
 	scene.add( sphere );
 
-	sphere.add( new THREE.Mesh( new THREE.SphereGeometry( 20, 2, 2 ).toFlatShading(), material ) );
-	sphere.add( new THREE.Mesh( new THREE.IcosahedronGeometry( 20, 0 ).toFlatShading(), material ) );
-	sphere.add( new THREE.Mesh( new THREE.CubeGeometry( 20, 20, 20 ).toFlatShading(), material ) );
-	sphere.add( new THREE.Mesh( new THREE.OctahedronGeometry( 20, 0 ).toFlatShading(), material ) );
-	sphere.add( new THREE.Mesh( new THREE.IcosahedronGeometry( 20, 1 ).toFlatShading(), material ) );
-	sphere.add( new THREE.Mesh( new THREE.TetrahedronGeometry( 20, 0 ).toFlatShading(), material ) );
-	sphere.add( new THREE.Mesh( new THREE.TetrahedronGeometry( 20, 1 ).toFlatShading(), material ) );
+	sphere.add( new THREE.Mesh( new THREE.SphereGeometry( 20, 2, 2 ), material ) );
+	sphere.add( new THREE.Mesh( new THREE.IcosahedronGeometry( 20, 0 ), material ) );
+	sphere.add( new THREE.Mesh( new THREE.BoxGeometry( 20, 20, 20 ), material ) );
+	sphere.add( new THREE.Mesh( new THREE.OctahedronGeometry( 20, 0 ), material ) );
+	sphere.add( new THREE.Mesh( new THREE.IcosahedronGeometry( 20, 1 ), material ) );
+	sphere.add( new THREE.Mesh( new THREE.TetrahedronGeometry( 20, 0 ), material ) );
+	sphere.add( new THREE.Mesh( new THREE.TetrahedronGeometry( 20, 1 ), material ) );
 
 	//
 
 	var group2 = new THREE.Object3D();
 	scene.add( group2 );
 
-	var geometry =  new THREE.TetrahedronGeometry( 20, 0 ).toFlatShading();
+	var geometry =  new THREE.TetrahedronGeometry( 20, 0 );
 	var material = new THREE.MeshLambertMaterial( {
 		color: 0x404040
 	} );
@@ -156,3 +159,5 @@ var Scene6bModule = function () {
 	};
 
 };
+
+export { Scene6bModule };
