@@ -3,8 +3,11 @@ import { FRAME } from 'Frame.js';
 
 function createInstancedMesh(parameters, count = 800, vector3 = new THREE.Vector3()) {
 
+	var geometry = new THREE.PlaneGeometry(5, 5);
+	var material = new THREE.MeshLambertMaterial(parameters);
+	var mesh = new THREE.InstancedMesh(geometry, material, count);
+
 	var dummy = new THREE.Object3D();
-	var datas = [];
 
 	for (var i = 0; i < count; i++) {
 
@@ -21,16 +24,8 @@ function createInstancedMesh(parameters, count = 800, vector3 = new THREE.Vector
 		dummy.scale.y = Math.random() * 10;
 		dummy.scale.z = Math.random() * 20;
 		dummy.updateMatrix();
-		datas.push(dummy.matrix.clone());
+		mesh.setMatrixAt(i, dummy.matrix);
 
-	}
-
-	var geometry = new THREE.PlaneGeometry(5, 5);
-	var material = new THREE.MeshLambertMaterial(parameters);
-	var mesh = new THREE.InstancedMesh(geometry, material, datas.length);
-
-	for (let i = 0; i < datas.length; i++) {
-		mesh.setMatrixAt(i, datas[i]);
 	}
 
 	return mesh;

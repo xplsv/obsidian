@@ -3,8 +3,12 @@ import { FRAME } from 'Frame.js';
 
 function createInstancedMesh(parameters, count = 800) {
 
+	var geometry = new THREE.BoxGeometry( 2, 2, 2 );
+	geometry.applyMatrix4( new THREE.Matrix4().makeTranslation( 0, 1, 0 ) );
+	var material = new THREE.MeshLambertMaterial(parameters);
+	var mesh = new THREE.InstancedMesh(geometry, material, count);
+
 	var dummy = new THREE.Object3D();
-	var datas = [];
 
 	for (var i = 0; i < count; i++) {
 
@@ -14,17 +18,8 @@ function createInstancedMesh(parameters, count = 800) {
 		dummy.scale.y = Math.random() * Math.random() * 100;
 		dummy.scale.z = Math.random() * 20;
 		dummy.updateMatrix();
-		datas.push(dummy.matrix.clone());
+		mesh.setMatrixAt(i, dummy.matrix);
 
-	}
-
-	var geometry = new THREE.BoxGeometry( 2, 2, 2 );
-	geometry.applyMatrix4( new THREE.Matrix4().makeTranslation( 0, 1, 0 ) );
-	var material = new THREE.MeshLambertMaterial(parameters);
-	var mesh = new THREE.InstancedMesh(geometry, material, datas.length);
-
-	for (let i = 0; i < datas.length; i++) {
-		mesh.setMatrixAt(i, datas[i]);
 	}
 
 	return mesh;
