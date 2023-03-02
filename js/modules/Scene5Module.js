@@ -87,7 +87,8 @@ var Scene5Module = function () {
 
 	var geometry =  new THREE.TetrahedronGeometry( 20, 0 );
 	var material = new THREE.MeshLambertMaterial( {
-		emissive: 0xf00000
+		emissive: 0xf00000,
+		flatShading: true,
 	} );
 
 	for ( var i = 0; i < 500; i ++ ) {

@@ -63,7 +63,7 @@ var Scene3Module = function () {
 	var sphere1 = new THREE.Object3D();
 	scene.add( sphere1 );
 
-	var material = new THREE.MeshLambertMaterial();
+	var material = new THREE.MeshLambertMaterial( { flatShading: true } );
 
 	sphere1.add( new THREE.Mesh( new THREE.SphereGeometry( 20, 2, 2 ), material ) );
 	sphere1.add( new THREE.Mesh( new THREE.IcosahedronGeometry( 20, 0 ), material ) );

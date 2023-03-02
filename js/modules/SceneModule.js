@@ -29,7 +29,7 @@ var SceneModule = function () {
 	scene.add( group );
 
 	var geometry = new THREE.IcosahedronGeometry( 5, 0 );
-	var material = new THREE.MeshLambertMaterial();
+	var material = new THREE.MeshLambertMaterial( { flatShading: true } );
 
 	for ( var i = 0; i < 500; i ++ ) {
 

@@ -34,7 +34,8 @@ var Scene4Module = function () {
 
 	var geometry =  new THREE.TetrahedronGeometry( 20, 0 );
 	var material = new THREE.MeshLambertMaterial( {
-		color: 0x404040
+		color: 0x404040,
+		flatShading: true,
 	} );
 
 	for ( var i = 0; i < 1000; i ++ ) {
@@ -54,7 +55,8 @@ var Scene4Module = function () {
 	scene.add( group2 );
 
 	var material = new THREE.MeshLambertMaterial( {
-		emissive: 0xf00000
+		emissive: 0xf00000,
+		flatShading: true,
 	} );
 
 	for ( var i = 0; i < 200; i ++ ) {
