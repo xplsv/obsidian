@@ -1,3 +1,6 @@
+import * as THREE from "three";
+import { FRAME } from 'Frame.js';
+
 var SceneModule = function () {
 
 	FRAME.Module.call( this );
@@ -25,8 +28,8 @@ var SceneModule = function () {
 	var group = new THREE.Object3D();
 	scene.add( group );
 
-	var geometry = new THREE.IcosahedronGeometry( 5, 0 ).toFlatShading();
-	var material = new THREE.MeshLambertMaterial();
+	var geometry = new THREE.IcosahedronGeometry( 5, 0 );
+	var material = new THREE.MeshLambertMaterial( { flatShading: true } );
 
 	for ( var i = 0; i < 500; i ++ ) {
 
@@ -82,3 +85,5 @@ var SceneModule = function () {
 	};
 
 };
+
+export { SceneModule };

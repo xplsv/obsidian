@@ -1,3 +1,7 @@
+import * as THREE from "three";
+import { FontLoader } from 'three/addons/loaders/FontLoader.js';
+import { FRAME } from 'Frame.js';
+
 var TextModule = function () {
 
 	FRAME.Module.call( this );
@@ -32,7 +36,7 @@ var TextModule = function () {
 
 		var string = parameters.text;
 
-		var loader = new THREE.FontLoader();
+		var loader = new FontLoader();
 		loader.load( 'files/fonts/helvetiker_regular.typeface.json', function ( font ) {
 
 			var shapes = font.generateShapes( string, 2 );
@@ -45,8 +49,7 @@ var TextModule = function () {
 
 				var shape = shapes[ i ];
 
-				var geometry = new THREE.Geometry().setFromPoints( shape.getPoints() );
-				geometry.vertices.push( geometry.vertices[ 0 ] );
+				var geometry = new THREE.BufferGeometry().setFromPoints( shape.getPoints() );
 				geometry.computeBoundingBox();
 
 				offset.union( geometry.boundingBox );
@@ -104,3 +107,5 @@ var TextModule = function () {
 	};
 
 };
+
+export { TextModule };
