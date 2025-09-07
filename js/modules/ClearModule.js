@@ -1,3 +1,5 @@
+import { FRAME } from 'Frame.js';
+
 var ClearModule = function () {
 
 	FRAME.Module.call( this );
@@ -9,3 +11,5 @@ var ClearModule = function () {
 	};
 
 };
+
+export { ClearModule };

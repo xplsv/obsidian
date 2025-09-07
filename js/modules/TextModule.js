@@ -1,3 +1,7 @@
+import * as THREE from "three";
+import { FontLoader } from 'three/addons/loaders/FontLoader.js';
+import { FRAME } from 'Frame.js';
+
 var TextModule = function () {
 
 	FRAME.Module.call( this );
@@ -23,7 +27,7 @@ var TextModule = function () {
 	var material = new THREE.LineBasicMaterial( { depthTest: false, opacity: 0.9, transparent: true } );
 
 	//
-	
+
 	var startPosition = new THREE.Vector3();
 	var endPosition = new THREE.Vector3();
 	var deltaPosition = new THREE.Vector3();
@@ -31,49 +35,51 @@ var TextModule = function () {
 	this.init = function ( parameters ) {
 
 		var string = parameters.text;
-		
-		var shapes = THREE.FontUtils.generateShapes( string, {
-			font: "helvetiker",
-			size: 2
-		} );
 
-		var text = new THREE.Object3D();
+		var loader = new FontLoader();
+		loader.load( 'files/fonts/helvetiker_regular.typeface.json', function ( font ) {
 
-		var offset = new THREE.Box3();
+			var shapes = font.generateShapes( string, 2 );
 
-		for ( var i = 0; i < shapes.length; i ++ ) {
+			var text = new THREE.Object3D();
 
-			var shape = shapes[ i ];
+			var offset = new THREE.Box3();
 
-			var geometry = shape.createPointsGeometry();
-			geometry.computeBoundingBox();
+			for ( var i = 0; i < shapes.length; i ++ ) {
 
-			offset.union( geometry.boundingBox );
+				var shape = shapes[ i ];
 
-			var mesh = new THREE.Line( geometry, material );
-			text.add( mesh );
+				var geometry = new THREE.BufferGeometry().setFromPoints( shape.getPoints() );
+				geometry.computeBoundingBox();
 
-			if ( shape.holes.length > 0 ) {
+				offset.union( geometry.boundingBox );
 
-				for ( var j = 0; j < shape.holes.length; j ++ ) {
+				var mesh = new THREE.Line( geometry, material );
+				text.add( mesh );
 
-					var hole = shape.holes[ j ];
-					shapes.push( hole.toShapes()[ 0 ] );
+				if ( shape.holes && shape.holes.length > 0 ) {
+
+					for ( var j = 0; j < shape.holes.length; j ++ ) {
+
+						var hole = shape.holes[ j ];
+						shapes.push( hole );
+
+					}
 
 				}
 
 			}
 
-		}
+			text.position.addVectors( offset.min, offset.max ).multiplyScalar( - 0.5 );
 
-		text.position.addVectors( offset.min, offset.max ).multiplyScalar( -0.5 );
-		
-		texts[ parameters.text ] = text;
-		
-	}
-		
+			texts[ parameters.text ] = text;
+
+		} );
+
+	};
+
 	this.start = function ( t, parameters ) {
-	 
+
 		if ( currentText !== null ) {
 
 			scene.remove( currentText );
@@ -82,7 +88,7 @@ var TextModule = function () {
 
 		currentText = texts[ parameters.text ];
 		scene.add( currentText );
-	 
+
 		startPosition.fromArray( parameters.startPosition );
 		endPosition.fromArray( parameters.endPosition );
 		deltaPosition.subVectors( endPosition, startPosition );
@@ -95,9 +101,11 @@ var TextModule = function () {
 		camera.position.multiplyScalar( t );
 		camera.position.add( startPosition );
 		camera.lookAt( scene.position );
-		
+
 		renderer.render( scene, camera );
 
 	};
 
 };
+
+export { TextModule };
